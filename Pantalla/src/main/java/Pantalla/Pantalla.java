@@ -8,24 +8,30 @@ package Pantalla;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import sockets.Cliente;
 
 /**
  *
  * @author Josué Alvarez M
  */
-public class Pantalla {
+public class Pantalla extends Thread{
     private final Ventana ventana;
     private final Pixel[][] pixeles;
     private final int ancho = 50;
     private final int alto = 50;
     
+    private final Cliente cliente;
+    
     public Pantalla() {
+        this.cliente = new Cliente(9000);
+        
         this.ventana = new Ventana();
         
         this.pixeles = new Pixel[alto][ancho];
         
         iniciarVentana();
         iniciarPixeles();
+        start();
         
         this.ventana.setVisible(true);
     }
@@ -72,5 +78,28 @@ public class Pantalla {
         return alto;
     }
     
-    
+    @Override
+    public void run(){
+        while(true){
+            try{
+                if(!cliente.getDatos().isEmpty()){
+                    int fila, columna, color;
+                    String[] punto;
+                    for (String puntoInf : cliente.getDatos(0).split(",")) {
+                        punto = puntoInf.split(":");
+                        fila = Integer.valueOf(punto[0]);
+                        columna = Integer.valueOf(punto[1]);
+
+                        if(punto[2] != "?"){
+                            color = Integer.valueOf(punto[2]);
+                            getPixeles(fila, columna).setColor(color);
+                        }
+                        else{
+                            cliente.getSalida().writeUTF(fila + ":" + columna + ":" + getPixeles(fila, columna).getColor());
+                        }
+                    }
+                }
+            } catch(Exception e){}
+        }
+    }
 }
