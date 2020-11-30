@@ -82,23 +82,35 @@ public class Pantalla extends Thread{
     public void run(){
         while(true){
             try{
+                System.out.print("");
+                
                 if(!cliente.getDatos().isEmpty()){
                     int fila, columna, color;
                     String[] punto;
-                    for (String puntoInf : cliente.getDatos(0).split(",")) {
+                    String respuesta = "";
+                    
+                    for (String puntoInf : cliente.getDatos().remove(0).split(",")) {
                         punto = puntoInf.split(":");
                         fila = Integer.valueOf(punto[0]);
                         columna = Integer.valueOf(punto[1]);
-
-                        if(punto[2] != "?"){
+                        
+                        if(!"?".equals(punto[2])){
                             color = Integer.valueOf(punto[2]);
                             getPixeles(fila, columna).setColor(color);
                         }
                         else{
-                            cliente.getSalida().writeUTF(fila + ":" + columna + ":" + getPixeles(fila, columna).getColor());
+                            if("".equals(respuesta))
+                                respuesta = fila + ":" + columna + ":" + getPixeles(fila, columna).getColor();
+                            else
+                                respuesta += "," + fila + ":" + columna + ":" + getPixeles(fila, columna).getColor();
                         }
                     }
+                    
+                    if(!"".equals(respuesta))
+                        cliente.getSalida().writeUTF(respuesta);
+                    
                 }
+                
             } catch(Exception e){}
         }
     }
