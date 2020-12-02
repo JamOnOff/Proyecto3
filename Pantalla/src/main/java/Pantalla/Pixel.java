@@ -16,7 +16,7 @@ public class Pixel {
     private final JLabel pixel;
     private int color;
     
-    public static final int NEGRO = 0;
+    public static final int BLANCO = 0;
     public static final int AZUL = 1;
     public static final int VERDE = 2;
     public static final int CYAN = 3;
@@ -31,7 +31,7 @@ public class Pixel {
     public static final int ROJO_CLARO = 12;
     public static final int MAGENTA_CLARO = 13;
     public static final int AMARILLO = 14;
-    public static final int BLANCO = 15;
+    public static final int NEGRO = 15;
     
     public Pixel(int tam) {
         pixel = new JLabel();
