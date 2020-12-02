@@ -5,6 +5,8 @@
  */
 package consola;
 
+import clases.Archivo;
+import juegos.Gato;
 import juegos.Juego;
 import sockets.Cliente;
 
@@ -14,7 +16,8 @@ import sockets.Cliente;
  */
 public class Consola{
     private static final Cliente cliente = new Cliente(9000);
-    private Juego juego;
+    private Juego juego = new Gato();
+    public static final String dirImagenes = (new Archivo("imagenes.txt")).getDireccion() + "/" + (new Archivo("imagenes.txt")).getNombre().replaceFirst(".txt", "") + "/";
     
     public static void enviarString(String mensaje){
         try {
