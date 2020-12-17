@@ -15,9 +15,16 @@ import sockets.Cliente;
  * @author Josué Alvarez M
  */
 public class Consola{
-    private static final Cliente cliente = new Cliente(9000);
-    private Juego juego = new Gato();
+    public static final Cliente cliente = new Cliente(9000);
+    public static final Entradas entradas = new Entradas(cliente);
+    
     public static final String dirImagenes = (new Archivo("imagenes.txt")).getDireccion() + "/" + (new Archivo("imagenes.txt")).getNombre().replaceFirst(".txt", "") + "/";
+    private final Juego juego;
+    
+    public Consola() {
+        
+        juego = new Gato();
+    }
     
     public static void enviarString(String mensaje){
         try {
@@ -30,15 +37,6 @@ public class Consola{
         }
         
         return cliente.getDatos().remove(0);
-    }
-
-    public Juego getJuego() {
-        return juego;
-    }
-
-    public void setJuego(Juego juego) {
-        this.juego = juego;
-        juego.start();
     }
     
     

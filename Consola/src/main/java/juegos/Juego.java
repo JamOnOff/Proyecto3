@@ -6,14 +6,39 @@
 package juegos;
 
 import java.util.ArrayList;
+import sprite.Imagen;
 
 /**
  *
  * @author Josué Alvarez M
  */
 public abstract class Juego extends Thread{
+    protected Imagen portada;
+    protected boolean iniciado = false;
     protected final ArrayList<ImagenPuntos> imagenes = new ArrayList();
 
+    public Juego(Imagen portada) {
+        this.portada = portada;
+    }
+    
+    public void iniciarJuego(){
+        iniciado = false;
+        
+        try {
+            sleep(250);
+        } catch (Exception ex) {}
+        
+        iniciado = true;
+    }
+    
+    public void pararJuego(){
+        iniciado = false;
+    }
+    
+    public Imagen getPortada() {
+        return portada;
+    }
+    
     public ArrayList<ImagenPuntos> getImagenes() {
         return imagenes;
     }
