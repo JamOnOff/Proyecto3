@@ -7,7 +7,6 @@ package juegos;
 
 import clases.Archivo;
 import consola.Consola;
-import sprite.Imagen;
 
 /**
  *
@@ -15,10 +14,9 @@ import sprite.Imagen;
  */
 public class Gato extends Juego{
     private final String[][] matriz = new String[3][3];
-    private final String[][] matrizSelecion = new String[3][3];
+    private final String[][] matrizSeleccion = new String[3][3];
     
     public Gato() {
-        super(new Imagen(Consola.dirImagenes + "gato/portada.png"));
         imagenes.add(new ImagenPuntos("equis", new Archivo("equis.txt", Consola.dirImagenes + "gato/"), 0));
         imagenes.add(new ImagenPuntos("circulo", new Archivo("circulo.txt", Consola.dirImagenes + "gato/"), 0));
         imagenes.add(new ImagenPuntos("lineas", new Archivo("lineas.txt", Consola.dirImagenes + "gato/"), 0));
@@ -32,19 +30,19 @@ public class Gato extends Juego{
     
     private boolean juegoFinalizado(){
         for (int i = 0; i < 3; i++) { // horizontales
-            if(matriz[i][0] == matriz[i][1] && matriz[i][1] == matriz[i][2] && matriz[i][2] != "")
+            if(matriz[i][0].equals(matriz[i][1]) && matriz[i][1].equals(matriz[i][2]) && !"".equals(matriz[i][2]))
                 return true;
         }
         
         for (int i = 0; i < 3; i++) { // verticales
-            if(matriz[0][i] == matriz[1][i] && matriz[1][i] == matriz[2][i] && matriz[2][i] != "")
+            if(matriz[0][i].equals(matriz[1][i]) && matriz[1][i].equals(matriz[2][i]) && !"".equals(matriz[2][i]))
                 return true;
         }
         
         // diagonales 
-        if(matriz[0][0] == matriz[1][1] && matriz[1][1] == matriz[2][2] && matriz[2][2] != "")
+        if(matriz[0][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][2]) && !"".equals(matriz[2][2]))
                 return true;
-        if(matriz[0][2] == matriz[1][1] && matriz[1][1] == matriz[2][0] && matriz[2][0] != "")
+        if(matriz[0][2].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][0]) && !"".equals(matriz[2][0]))
                 return true;
         
         for (int i = 0; i < 3; i++) { // verifica si hay una casilla libre
@@ -61,11 +59,11 @@ public class Gato extends Juego{
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 matriz[i][j] = "";
-                matrizSelecion[i][j] = "";
+                matrizSeleccion[i][j] = "";
             }
         }
         
-        matrizSelecion[0][0] = "*";
+        matrizSeleccion[0][0] = "*";
     }
     
     private void refrescarImagen(){
@@ -76,7 +74,7 @@ public class Gato extends Juego{
             for (int j = 0; j < 3; j++) {
                 String dato = matriz[i][j];
                 
-                if("*".equals(matrizSelecion[i][j])){
+                if("*".equals(matrizSeleccion[i][j])){
                     getImagenes("seleccionar").iniciarPuntos(18 * i, 18 * j);
                     Consola.enviarString(getImagenes("seleccionar").getPuntos());
                 }
@@ -97,33 +95,33 @@ public class Gato extends Juego{
         for (int i = 0; i < 3; i++) {
             int cont = 0;
             for (int j = 0; j < 3; j++) {
-                if("*".equals(matrizSelecion[i][j])){
+                if("*".equals(matrizSeleccion[i][j])){
                     if("w".equals(tecla) && i > 0){
-                        matrizSelecion[i][j] = "";
-                        matrizSelecion[i - 1][j] = "*";
+                        matrizSeleccion[i][j] = "";
+                        matrizSeleccion[i - 1][j] = "*";
 
                         refrescarImagen();
                         cont = 1;
                         break;
                     }
                     if("a".equals(tecla) && j > 0){
-                        matrizSelecion[i][j] = "";
-                        matrizSelecion[i][j - 1] = "*";
+                        matrizSeleccion[i][j] = "";
+                        matrizSeleccion[i][j - 1] = "*";
                             
                         refrescarImagen();
                         break;
                     }
                     if("s".equals(tecla) && i < 2){
-                        matrizSelecion[i][j] = "";
-                        matrizSelecion[i + 1][j] = "*";
+                        matrizSeleccion[i][j] = "";
+                        matrizSeleccion[i + 1][j] = "*";
 
                         refrescarImagen();
                         cont = 1;
                         break;
                     }
                     if("d".equals(tecla) && j < 2){
-                        matrizSelecion[i][j] = "";
-                        matrizSelecion[i][j + 1] = "*";
+                        matrizSeleccion[i][j] = "";
+                        matrizSeleccion[i][j + 1] = "*";
 
                         refrescarImagen();
                         cont = 1;
@@ -153,7 +151,7 @@ public class Gato extends Juego{
                     for (int i = 0; i < 3; i++) {
                         cont = 0;
                         for (int j = 0; j < 3; j++) {
-                            if("*".equals(matrizSelecion[i][j])){
+                            if("*".equals(matrizSeleccion[i][j])){
                                 if("".equals(matriz[i][j])){
                                     if(juegoFinalizado()){
                                         iniciarMatriz();

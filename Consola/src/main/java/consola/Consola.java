@@ -26,12 +26,25 @@ public class Consola{
         juego = new Gato();
     }
     
+    /**
+     * Envia el mensaje al controlador para informar a la pantalla del pixel a pintar.
+     * 
+     * @param mensaje 
+     * String con la información de los pixeles, el formato es: "fila:columna:color,fila2:columna2:color2"
+     * separando por "," n cantidad de pixeles.
+     */
     public static void enviarString(String mensaje){
         try {
             cliente.getSalida().writeUTF(mensaje);
         } catch (Exception e) {}
     }
     
+    /**
+     * Si se envia un mensaje con enviarString y en la posicion del color se pone "?" la pantalla enviará 
+     * por medio del controlador la informacion del pixel indicado.
+     * 
+     * @return String
+     */
     public static String getRespuesta(){
         while(cliente.getDatos().isEmpty()){
         }

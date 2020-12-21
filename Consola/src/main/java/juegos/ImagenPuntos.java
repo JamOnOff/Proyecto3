@@ -26,6 +26,9 @@ public class ImagenPuntos {
         iniciarPuntos();
     }
     
+    /**
+     * Crea el string puntos en el formato requerido a partir del contenido del archivo.
+     */
     public void iniciarPuntos(){
         puntos = "";
         
@@ -47,6 +50,12 @@ public class ImagenPuntos {
         }
     }
     
+    /**
+     * Crea el string puntos en el formato requerido a partir del contenido del 
+     * archivo definiendo la posición del pixel inicial según las entradas.
+     * @param fila
+     * @param columna 
+     */
     public void iniciarPuntos(int fila, int columna){
         puntos = "";
         
@@ -74,6 +83,4 @@ public class ImagenPuntos {
     public String getPuntos() {
         return puntos;
     }
-    
-    
 }
