@@ -8,6 +8,7 @@ package consola;
 import clases.Archivo;
 import juegos.Gato;
 import juegos.Juego;
+import juegos.Pacman;
 import sockets.Cliente;
 
 /**
@@ -23,7 +24,7 @@ public class Consola{
     
     public Consola() {
         
-        juego = new Gato();
+        juego = new Pacman();
     }
     
     /**
